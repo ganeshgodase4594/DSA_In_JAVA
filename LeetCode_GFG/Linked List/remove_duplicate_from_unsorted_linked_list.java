@@ -1,119 +1,144 @@
 
+
 /*
 
-Remove duplicate element from sorted Linked List
-EasyAccuracy: 49.37%Submissions: 262K+Points: 2
+Remove duplicates from an unsorted linked list
+EasyAccuracy: 45.95%Submissions: 212K+Points: 2
 
-Fast-Track your resumes to top tech companies and get the job you deserve! Register for hiring challenge exclusively for Freshers  
-banner
-
-Given a singly linked list consisting of N nodes. The task is to remove duplicates (nodes with duplicate values) from the given list (if exists).
-Note: Try not to use extra space. The nodes are arranged in a sorted way.
+Given an unsorted linked list of N nodes. The task is to remove duplicate elements from this unsorted Linked List. When a value appears in multiple nodes, the node which appeared first should be kept, all others duplicates are to be removed.
 
 Example 1:
 
 Input:
-LinkedList: 2->2->4->5
-Output: 2 4 5
-Explanation: In the given linked list 
-2 ->2 -> 4-> 5, only 2 occurs more 
-than 1 time. So we need to remove it once.
+N = 4
+value[] = {5,2,2,4}
+Output: 5 2 4
+Explanation:Given linked list elements are
+5->2->2->4, in which 2 is repeated only.
+So, we will delete the extra repeated
+elements 2 from the linked list and the
+resultant linked list will contain 5->2->4
 
 Example 2:
 
 Input:
-LinkedList: 2->2->2->2->2
+N = 5
+value[] = {2,2,2,2,2}
 Output: 2
-Explanation: In the given linked list 
-2 ->2 ->2 ->2 ->2, 2 is the only element
-and is repeated 5 times. So we need to remove
-any four 2.
+Explanation:Given linked list elements are
+2->2->2->2->2, in which 2 is repeated. So,
+we will delete the extra repeated elements
+2 from the linked list and the resultant
+linked list will contain only 2.
 
 Your Task:
-The task is to complete the function removeDuplicates() which takes the head of input linked list as input. The function should remove the duplicates from linked list and return the head of the linkedlist.
+You have to complete the method removeDuplicates() which takes 1 argument: the head of the linked list.  Your function should return a pointer to a linked list with no duplicate element.
 
-Expected Time Complexity : O(N)
-Expected Auxilliary Space : O(1)
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(N)
+
+Constraints:
+1 <= size of linked lists <= 106
+0 <= numbers in list <= 104
 
  */
-
 import java.util.*;
+import java.io.*;
 class Node
-    {
-        int data;
-        Node next;
-        Node(int d) {data = d; next = null; }
+{
+    int data;
+    Node next;
+    Node(int d) {
+        data = d; 
+        next = null;
     }
+}
+
 class Remove_Duplicate_From_LL
 {
     Node head;  
-    Node tail;
+    Node temp;
 	public void addToTheLast(Node node) 
 	{
+
 	  if (head == null) 
 	  {
-	   head = node;
-	   tail = node;
-	  } 
-	  else 
-	  {
-	   tail.next = node;
-	   tail = node;
+	    head = node;
+	    temp = node;
+	  }
+	  else{
+	      temp.next = node;
+	      temp = node;
 	  }
 	}
-      void printList()
+
+      void printList(PrintWriter out)
     {
         Node temp = head;
         while (temp != null)
         {
-           System.out.print(temp.data+" ");
+           out.print(temp.data+" ");
            temp = temp.next;
         }  
-        System.out.println();
+        out.println();
     }
+	
 	/* Drier program to test above functions */
-	public static void main(String args[])
+	public static void main(String args[])throws IOException
     {
-         Scanner sc = new Scanner(System.in);
-		 int t=sc.nextInt();
+       
+        
+        /* Constructed Linked List is 1->2->3->4->5->6->
+           7->8->8->9->null */
+         BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
+         PrintWriter out=new PrintWriter(System.out);
+		 int t=Integer.parseInt(in.readLine().trim());
+		  
 		 while(t>0)
          {
-			int n = sc.nextInt();
-			Remove_Duplicate_From_LL llist = new Remove_Duplicate_From_LL(); 
-			int a1=sc.nextInt();
+			int n = Integer.parseInt(in.readLine().trim());
+			Remove_Duplicate_From_LL llist = new Remove_Duplicate_From_LL();
+			String s[]=in.readLine().trim().split(" ");
+			int a1=Integer.parseInt(s[0]);
 			Node head= new Node(a1);
             llist.addToTheLast(head);
             for (int i = 1; i < n; i++) 
 			{
-				int a = sc.nextInt(); 
+				int a = Integer.parseInt(s[i]); 
 				llist.addToTheLast(new Node(a));
 			}
-			
-        GfG g = new GfG();
+		//llist.printList();	
+        Solution g = new Solution();
 		llist.head = g.removeDuplicates(llist.head);
-		llist.printList();
+		llist.printList(out);
 		
         t--;		
         }
+        out.close();
     }
 }
 
+// } Driver Code Ends
 
-/*
+
+/* The structure of linked list is the following
 class Node
-    {
-        int data;
-        Node next;
-        Node(int d) {data = d; next = null; }
+{
+    int data;
+    Node next;
+    Node(int d) {
+        data = d; 
+        next = null;
     }
+}
 */
 
-class GfG
+class Solution
 {
-    
-    Node removeDuplicates(Node head)
+    //Function to remove duplicates from unsorted linked list.
+    public Node removeDuplicates(Node head) 
     {
-	    HashSet<Integer>hs=new LinkedHashSet<>();
+         HashSet<Integer>hs=new LinkedHashSet<>();
 	    
 	    while(head!=null){
 	        hs.add(head.data);
